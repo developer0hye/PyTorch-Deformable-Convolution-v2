@@ -25,6 +25,7 @@ class DeformableConv2d(nn.Module):
                                      stride=stride,
                                      bias=True)
         nn.init.constant_(self.offset_conv.weight, 0.)
+        nn.init.constant_(self.offset_conv.bias, 0.)
         
         self.modulator_conv = nn.Conv2d(in_channels, 
                                      1 * kernel_size * kernel_size,
@@ -33,7 +34,7 @@ class DeformableConv2d(nn.Module):
                                      stride=stride,
                                      bias=True)
         nn.init.constant_(self.modulator_conv.weight, 0.)
-        
+        nn.init.constant_(self.modulator_conv.bias, 0.)
         
         self.regular_conv = nn.Conv2d(in_channels=in_channels,
                                       out_channels=out_channels,
@@ -43,7 +44,10 @@ class DeformableConv2d(nn.Module):
                                       bias=True)
         
     def forward(self, x):
-        offset = self.offset_conv(x)
+        h, w = x.shape[2:]
+        max_length = max(h, w)/2.
+        
+        offset = self.offset_conv(x).clamp(-max_length, max_length)
         modulator = torch.sigmoid(self.modulator_conv(x))
 
         x = torchvision.ops.deform_conv2d(input=x, 

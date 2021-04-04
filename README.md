@@ -20,19 +20,20 @@ class DeformableConv2d(nn.Module):
         
         self.offset_conv = nn.Conv2d(in_channels, 
                                      2 * kernel_size * kernel_size,
-                                     kernel_size=kernel_size, 
-                                     padding=self.padding, 
+                                     kernel_size=3, 
+                                     padding=1, 
                                      stride=stride,
                                      bias=True)
         nn.init.constant_(self.offset_conv.weight, 0.)
         
         self.modulator_conv = nn.Conv2d(in_channels, 
                                      1 * kernel_size * kernel_size,
-                                     kernel_size=kernel_size, 
-                                     padding=self.padding, 
+                                     kernel_size=3, 
+                                     padding=1, 
                                      stride=stride,
                                      bias=True)
         nn.init.constant_(self.modulator_conv.weight, 0.)
+        
         
         self.regular_conv = nn.Conv2d(in_channels=in_channels,
                                       out_channels=out_channels,
@@ -52,5 +53,4 @@ class DeformableConv2d(nn.Module):
                                           padding=self.padding,
                                           mask=modulator)
         return x
-
 ```

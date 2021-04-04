@@ -15,19 +15,21 @@ class DeformableConv2d(nn.Module):
         
         self.offset_conv = nn.Conv2d(in_channels, 
                                      2 * kernel_size * kernel_size,
-                                     kernel_size=3, 
-                                     padding=1, 
+                                     kernel_size=kernel_size, 
+                                     padding=self.padding, 
                                      stride=stride,
                                      bias=True)
+
         nn.init.constant_(self.offset_conv.weight, 0.)
         nn.init.constant_(self.offset_conv.bias, 0.)
         
         self.modulator_conv = nn.Conv2d(in_channels, 
                                      1 * kernel_size * kernel_size,
-                                     kernel_size=3, 
-                                     padding=1, 
+                                     kernel_size=kernel_size, 
+                                     padding=self.padding, 
                                      stride=stride,
                                      bias=True)
+
         nn.init.constant_(self.modulator_conv.weight, 0.)
         nn.init.constant_(self.modulator_conv.bias, 0.)
         
@@ -37,18 +39,19 @@ class DeformableConv2d(nn.Module):
                                       stride=stride,
                                       padding=self.padding,
                                       bias=True)
-        
+    
     def forward(self, x):
         h, w = x.shape[2:]
-        max_length = max(h, w)/2.
+        max_offset = max(h, w)/2.
         
-        offset = self.offset_conv(x).clamp(-max_length, max_length)
-        modulator = torch.sigmoid(self.modulator_conv(x))
+        offset = self.offset_conv(x).clamp(-max_offset, max_offset)
+        modulator = 2. * torch.sigmoid(self.modulator_conv(x))
 
         x = torchvision.ops.deform_conv2d(input=x, 
                                           offset=offset, 
                                           weight=self.regular_conv.weight, 
                                           bias=self.regular_conv.bias, 
                                           padding=self.padding,
-                                          mask=modulator)
+                                          mask=modulator
+                                          )
         return x

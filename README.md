@@ -28,7 +28,7 @@ Refer to .ipynb file!
 
 Simple CNN Model that the number of conv layers is 5.
 
-```cpp
+```python
 class MNISTClassifier(nn.Module):
     def __init__(self,
                  deformable=False):

@@ -1,63 +1,80 @@
 # Simple-PyTorch-Deformable-Convolution-v2
 Don't feel fain to use Deformable Convolution
 
+# Usage
 
 ```python
-import torch
-import torchvision.ops
-from torch import nn
 
-class DeformableConv2d(nn.Module):
+from dcn import DeformableConv2d
+
+class Model(nn.Module):
+    ...
+    self.conv = DeformableConv2d(in_channels=32, out_channels=32, kernel_size=3, stride=1, padding=1)
+    ...
+
+```
+
+# Simple Experiment
+
+You can simply reproduce the results of the my experiment on Google Colab.
+
+Refer to .ipynb file!
+
+## Task
+
+**Scaled-MNIST** Handwritten Digit Classification
+
+## Model
+
+Simple CNN Model that the number of conv layers is 5.
+
+```cpp
+class MNISTClassifier(nn.Module):
     def __init__(self,
-                 in_channels,
-                 out_channels,
-                 kernel_size=3,
-                 stride=1):
+                 deformable=False):
 
-        super(DeformableConv2d, self).__init__()
-
-        self.padding = kernel_size//2
+        super(MNISTClassifier, self).__init__()
         
-        self.offset_conv = nn.Conv2d(in_channels, 
-                                     2 * kernel_size * kernel_size,
-                                     kernel_size=kernel_size, 
-                                     padding=self.padding, 
-                                     stride=stride,
-                                     bias=True)
-
-        nn.init.constant_(self.offset_conv.weight, 0.)
-        nn.init.constant_(self.offset_conv.bias, 0.)
+        self.conv1 = nn.Conv2d(1, 32, kernel_size=3, stride=1, padding=1)
+        self.conv2 = nn.Conv2d(32, 32, kernel_size=3, stride=1, padding=1)     
+        conv = nn.Conv2d if deformable==False else DeformableConv2d
+        self.conv3 = conv(32, 32, kernel_size=3, stride=1, padding=1)
+        self.conv4 = conv(32, 32, kernel_size=3, stride=1, padding=1)
+        self.conv5 = conv(32, 32, kernel_size=3, stride=1, padding=1)
         
-        self.modulator_conv = nn.Conv2d(in_channels, 
-                                     1 * kernel_size * kernel_size,
-                                     kernel_size=kernel_size, 
-                                     padding=self.padding, 
-                                     stride=stride,
-                                     bias=True)
-
-        nn.init.constant_(self.modulator_conv.weight, 0.)
-        nn.init.constant_(self.modulator_conv.bias, 0.)
+        self.pool = nn.MaxPool2d(2)
+        self.gap = nn.AdaptiveAvgPool2d((1, 1))
+        self.fc = nn.Linear(32, 10)
         
-        self.regular_conv = nn.Conv2d(in_channels=in_channels,
-                                      out_channels=out_channels,
-                                      kernel_size=kernel_size,
-                                      stride=stride,
-                                      padding=self.padding,
-                                      bias=False)
-    
     def forward(self, x):
-        h, w = x.shape[2:]
-        max_offset = max(h, w)/4.
-        
-        offset = self.offset_conv(x).clamp(-max_offset, max_offset)
-        modulator = 2. * torch.sigmoid(self.modulator_conv(x))
-        
-        x = torchvision.ops.deform_conv2d(input=x, 
-                                          offset=offset, 
-                                          weight=self.regular_conv.weight, 
-                                          bias=self.regular_conv.bias, 
-                                          padding=self.padding,
-                                          mask=modulator
-                                          )
+        x = torch.relu(self.conv1(x))
+        x = self.pool(x) # [14, 14]
+        x = torch.relu(self.conv2(x))
+        x = self.pool(x) # [7, 7]
+        x = torch.relu(self.conv3(x))
+        x = torch.relu(self.conv4(x))
+        x = torch.relu(self.conv5(x))
+        x = self.gap(x)
+        x = x.flatten(start_dim=1)
+        x = self.fc(x)
         return x
 ```
+
+## Training
+
+- Optimizer: Adam
+- Learning Rate: 1e-3
+- Learning Rate Scheduler: StepLR(step_size=1, gamma=0.7)
+- Batch Size: 64
+- Augmentation: **X**
+
+## Test
+
+All images in the test set of MNIST dataset are augmented by scale augmentation(x0.5, x0.6, ..., x1.4, 1.5).
+
+The goal of scale augmentation is to validate the deformable convolution is robust to scale variation.
+
+
+
+
+

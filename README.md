@@ -70,7 +70,7 @@ class MNISTClassifier(nn.Module):
 
 ## Test
 
-All images in the test set of MNIST dataset are augmented by scale augmentation(x0.5, x0.6, ..., x1.4, 1.5).
+All images in the test set of MNIST dataset are augmented by scale augmentation(x0.5, x0.6, ..., x1.4, x1.5).
 
 The goal of scale augmentation is to validate the deformable convolution is robust to scale variation.
 

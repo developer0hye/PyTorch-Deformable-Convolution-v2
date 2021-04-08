@@ -1,10 +1,15 @@
+import torch
+import torchvision.ops
+from torch import nn
+
 class DeformableConv2d(nn.Module):
     def __init__(self,
                  in_channels,
                  out_channels,
                  kernel_size=3,
+                 stride=1,
                  padding=1,
-                 stride=1):
+                 bias=False):
 
         super(DeformableConv2d, self).__init__()
 
@@ -35,11 +40,11 @@ class DeformableConv2d(nn.Module):
                                       kernel_size=kernel_size,
                                       stride=stride,
                                       padding=self.padding,
-                                      bias=False)
+                                      bias=bias)
     
     def forward(self, x):
         h, w = x.shape[2:]
-        max_offset = max(h, w)/4. # to clip the large offset exceeds the boundary of feature map
+        max_offset = max(h, w)/4.
 
         offset = self.offset_conv(x).clamp(-max_offset, max_offset)
         modulator = 2. * torch.sigmoid(self.modulator_conv(x))

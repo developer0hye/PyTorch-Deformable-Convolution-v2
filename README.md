@@ -71,7 +71,7 @@ class MNISTClassifier(nn.Module):
 
 ## Test
 
-In the [paper](https://arxiv.org/abs/1811.11168), authors mentioned the network's ability to model geometric transformation with DCNv2 is considerably enhanced.
+In the [paper](https://arxiv.org/abs/1811.11168), authors mentioned that the network's ability to model geometric transformation with DCNv2 is considerably enhanced.
 
 I verified it with scale augmentation.
 

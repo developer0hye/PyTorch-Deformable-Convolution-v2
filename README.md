@@ -78,6 +78,6 @@ The scale augmentation is used to verify that DCNv2 is robust to scale variation
 ### Results
 
 |Model|Top-1 Accuracy(%)|
-|---|---|---|
+|---|---|
 |w/o DCNv2|90.03%|
-|w/ DCNv2|92.90%|
+|**w/ DCNv2**|**92.90%**|

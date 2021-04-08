@@ -26,7 +26,7 @@ Refer to experiment.ipynb!
 
 ## Model
 
-Simple CNN Model that the number of conv layers is 5.
+Simple CNN Model including 5 conv layers
 
 ```python
 class MNISTClassifier(nn.Module):
@@ -67,7 +67,7 @@ class MNISTClassifier(nn.Module):
 - Learning Rate Scheduler: StepLR(step_size=1, gamma=0.7)
 - Batch Size: 64
 - Epochs: 14
-- Augmentation: **X**
+- Augmentation: **NONE**
 
 ## Test
 
@@ -81,3 +81,9 @@ The scale augmentation is used to verify that DCNv2 is robust to scale variation
 |---|---|
 |w/o DCNv2|90.03%|
 |**w/ DCNv2**|**92.90%**|
+
+## References
+
+[mxnet implementation](https://github.com/apache/incubator-mxnet/blob/5722f8b38af58c5a296e46ca695bfaf7cff85040/python/mxnet/gluon/nn/conv_layers.py#L1447-L1631
+)
+

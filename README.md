@@ -16,7 +16,7 @@ class Model(nn.Module):
 
 # Experiment
 
-You can simply reproduce the results of the my experiment on Google Colab.
+You can simply reproduce the results of my experiment on Google Colab.
 
 Refer to experiment.ipynb!
 

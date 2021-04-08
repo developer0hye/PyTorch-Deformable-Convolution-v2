@@ -71,9 +71,13 @@ class MNISTClassifier(nn.Module):
 
 ## Test
 
+In the [paper](https://arxiv.org/abs/1811.11168), authors mentioned the network's ability to model geometric transformation with DCNv2 is considerably enhanced.
+
+I verified it with this scale augmentation.
+
 All images in the test set of MNIST dataset are augmented by scale augmentation(x0.5, x0.6, ..., x1.4, x1.5).
 
-The scale augmentation is used to verify that DCNv2 is robust to scale variation.
+
 
 ### Results
 

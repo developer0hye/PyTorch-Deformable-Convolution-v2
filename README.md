@@ -1,5 +1,5 @@
 # Simple-PyTorch-Deformable-Convolution-v2
-Don't feel fain to use Deformable Convolution
+Don't feel fain to use Deformable Convolution v2(DCNv2)
 
 # Usage
 
@@ -72,7 +72,7 @@ class MNISTClassifier(nn.Module):
 
 All images in the test set of MNIST dataset are augmented by scale augmentation(x0.5, x0.6, ..., x1.4, x1.5).
 
-The goal of scale augmentation is to validate the deformable convolution is robust to scale variation.
+The scale augmentation is used to verify that DCN is robust to scale variation.
 
 
 

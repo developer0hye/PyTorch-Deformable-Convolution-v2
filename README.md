@@ -18,7 +18,7 @@ class Model(nn.Module):
 
 You can simply reproduce the results of the my experiment on Google Colab.
 
-Refer to .ipynb file!
+Refer to experiment.ipynb!
 
 ## Task
 
@@ -66,6 +66,7 @@ class MNISTClassifier(nn.Module):
 - Learning Rate: 1e-3
 - Learning Rate Scheduler: StepLR(step_size=1, gamma=0.7)
 - Batch Size: 64
+- Epochs: 14
 - Augmentation: **X**
 
 ## Test
@@ -76,14 +77,7 @@ The scale augmentation is used to verify that DCNv2 is robust to scale variation
 
 ### Results
 
-
-
-
-
-
-
-
-
-
-
-
+|Model|Top-1 Accuracy(%)|
+|---|---|---|
+|w/o DCNv2|90.03%|
+|w/ DCNv2|92.90%|

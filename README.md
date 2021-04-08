@@ -14,7 +14,7 @@ class Model(nn.Module):
 
 ```
 
-# Simple Experiment
+# Experiment
 
 You can simply reproduce the results of the my experiment on Google Colab.
 
@@ -35,16 +35,16 @@ class MNISTClassifier(nn.Module):
 
         super(MNISTClassifier, self).__init__()
         
-        self.conv1 = nn.Conv2d(1, 32, kernel_size=3, stride=1, padding=1)
-        self.conv2 = nn.Conv2d(32, 32, kernel_size=3, stride=1, padding=1)     
+        self.conv1 = nn.Conv2d(1, 16, kernel_size=3, stride=1, padding=1, bias=True)
+        self.conv2 = nn.Conv2d(16, 16, kernel_size=3, stride=1, padding=1, bias=True)
+        self.conv3 = nn.Conv2d(16, 16, kernel_size=3, stride=1, padding=1, bias=True)   
         conv = nn.Conv2d if deformable==False else DeformableConv2d
-        self.conv3 = conv(32, 32, kernel_size=3, stride=1, padding=1)
-        self.conv4 = conv(32, 32, kernel_size=3, stride=1, padding=1)
-        self.conv5 = conv(32, 32, kernel_size=3, stride=1, padding=1)
+        self.conv4 = conv(16, 16, kernel_size=3, stride=1, padding=1, bias=True)
+        self.conv5 = conv(16, 16, kernel_size=3, stride=1, padding=1, bias=True)
         
         self.pool = nn.MaxPool2d(2)
         self.gap = nn.AdaptiveAvgPool2d((1, 1))
-        self.fc = nn.Linear(32, 10)
+        self.fc = nn.Linear(16, 10)
         
     def forward(self, x):
         x = torch.relu(self.conv1(x))
@@ -72,7 +72,11 @@ class MNISTClassifier(nn.Module):
 
 All images in the test set of MNIST dataset are augmented by scale augmentation(x0.5, x0.6, ..., x1.4, x1.5).
 
-The scale augmentation is used to verify that DCN is robust to scale variation.
+The scale augmentation is used to verify that DCNv2 is robust to scale variation.
+
+### Results
+
+
 
 
 

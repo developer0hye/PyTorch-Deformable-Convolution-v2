@@ -43,7 +43,7 @@ class DeformableConv2d(nn.Module):
                                       bias=bias)
     
     def forward(self, x):
-        h, w = x.shape[2:]
+        #h, w = x.shape[2:]
         #max_offset = max(h, w)/4.
 
         offset = self.offset_conv(x)#.clamp(-max_offset, max_offset)

@@ -41,7 +41,9 @@ class DeformableConv2d(nn.Module):
                                       stride=stride,
                                       padding=self.padding,
                                       bias=bias)
-    
+        
+        self.stride = stride if type(stride) == tuple else (stride, stride)
+        
     def forward(self, x):
         #h, w = x.shape[2:]
         #max_offset = max(h, w)/4.
@@ -54,6 +56,7 @@ class DeformableConv2d(nn.Module):
                                           weight=self.regular_conv.weight, 
                                           bias=self.regular_conv.bias, 
                                           padding=self.padding,
-                                          mask=modulator
+                                          mask=modulator,
+                                          stride=self.stride,
                                           )
         return x

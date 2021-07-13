@@ -12,7 +12,8 @@ class DeformableConv2d(nn.Module):
                  bias=False):
 
         super(DeformableConv2d, self).__init__()
-
+        
+        self.stride = stride if type(stride) == tuple else (stride, stride)
         self.padding = padding
         
         self.offset_conv = nn.Conv2d(in_channels, 
@@ -41,9 +42,7 @@ class DeformableConv2d(nn.Module):
                                       stride=stride,
                                       padding=self.padding,
                                       bias=bias)
-        
-        self.stride = stride if type(stride) == tuple else (stride, stride)
-        
+
     def forward(self, x):
         #h, w = x.shape[2:]
         #max_offset = max(h, w)/4.

@@ -3,8 +3,7 @@ Don't feel fain to use Deformable Convolution v2(DCNv2)
 
 ![](offset_visualization.gif)
 
-Refer to [offset_visualization.py](./offset_visualization.py)
-
+If you are curious about how to visualize offset(red point), refer to [offset_visualization.py](./offset_visualization.py)
 
 # Usage
 

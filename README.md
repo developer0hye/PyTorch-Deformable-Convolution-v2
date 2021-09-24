@@ -1,4 +1,4 @@
-# Simple-PyTorch-Deformable-Convolution-v2
+# PyTorch-Deformable-Convolution-v2
 Don't feel fain to use Deformable Convolution v2(DCNv2)
 
 ![](offset_visualization.gif)

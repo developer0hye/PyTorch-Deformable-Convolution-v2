@@ -17,10 +17,6 @@ class Model(nn.Module):
     ...
 
 ```
-## Used by
-
-[developer0hye/Simple-CenterNet](https://github.com/developer0hye/Simple-CenterNet)
-
 
 # Experiment
 

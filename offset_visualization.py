@@ -52,8 +52,8 @@ def plot_offsets(img, save_output, roi_x, roi_y):
         offset_tensor_h, offset_tensor_w = offsets.shape[2:]
         resize_factor_h, resize_factor_w = input_img_h/offset_tensor_h, input_img_w/offset_tensor_w
 
-        offsets_y = offsets[:, :9]
-        offsets_x = offsets[:, 9:]
+        offsets_y = offsets[:, ::2]
+        offsets_x = offsets[:, 1::2]
 
         grid_y = np.arange(0, offset_tensor_h)
         grid_x = np.arange(0, offset_tensor_w)

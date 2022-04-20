@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Kwon"
+  given-names: "Yonghye"
+  orcid: "https://orcid.org/my-orcid?orcid=0000-0001-8308-9909"
+title: "PyTorch-Deformable-Convolution-v2"
+version: 1.0.0
+date-released: 2022-04-20
+url: "https://github.com/developer0hye/PyTorch-Deformable-Convolution-v2"

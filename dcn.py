@@ -65,6 +65,5 @@ class DeformableConv2d(nn.Module):
                                           padding=self.padding,
                                           mask=modulator,
                                           stride=self.stride,
-                                          dilation=self.dilation,
-                                          )
+                                          dilation=self.dilation)
         return x

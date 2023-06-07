@@ -82,8 +82,8 @@ def plot_offsets(img, save_output, roi_x, roi_y):
         sampling_x = sampling_x[roi_y, roi_x]
         
         for y, x in zip(sampling_y, sampling_x):
-            y = round(y)
-            x = round(x)
+            y = round(y + resize_factor_h/2)
+            x = round(x + resize_factor_w/2)
             cv2.circle(img, center=(x, y), color=(0, 0, 255), radius=1, thickness=-1)
                 
 
